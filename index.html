@@ -806,16 +806,17 @@ window.handleSubmit = async function(e){
   };
 
   try {
-    Swal.fire({title:"กำลังบันทึก...", didOpen:()=>Swal.showLoading()});
+    Swal.fire({title:"⏳ กำลังบันทึก...", didOpen:()=>Swal.showLoading()});
 
     // ✅ save Firebase
     await saveDataFirebase(data);
 
     // ✅ save Sheet + Email (ใช้ URL จริงของหนู)
     await fetch("https://script.google.com/macros/s/AKfycbxU2JG0Nlww5Ncgz5MCGDDNH_NhxXZwAL2YKTsC5jk4MCkhg2YPeIjSxmh4gFt1fwAJ/exec", {
-      method: "POST",
-      body: JSON.stringify(data)
-    });
+  method: "POST",
+  body: JSON.stringify(data)
+});
+
 
     Swal.fire("สำเร็จ","บันทึกเรียบร้อย","success");
 
