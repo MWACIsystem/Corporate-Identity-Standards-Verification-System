@@ -809,29 +809,21 @@ window.handleSubmit = function(e){
 
   google.script.run
     .withSuccessHandler(async ()=>{
-      try {
-        await saveDataFirebase(data);
-      } catch (err) {
-        console.error(err);
-        Swal.fire("Error", "บันทึก Firestore ไม่สำเร็จ: " + err.message, "error");
-        return;
-      }
+try {
+  Swal.fire({title:"กำลังบันทึก...", didOpen:()=>Swal.showLoading()});
 
-      Swal.fire("สำเร็จ","บันทึกเรียบร้อย","success");
+  await saveDataFirebase(data);
 
-      // refresh history cache แล้วพาไป history
-      historyData = [];
-      currentPage = 0;
-      await window.renderHistory(0);
-      window.showTab("history");
-    })
-    .withFailureHandler(err=>{
-      Swal.fire("Error", err.message, "error");
-    })
-    .saveData(data);
+  Swal.fire("สำเร็จ","บันทึกเรียบร้อย","success");
 
-  return false; // ✅ กันฟอร์ม submit แล้วหน้าเปลี่ยนเป็นขาว
-};
+  historyData = [];
+  currentPage = 0;
+  await window.renderHistory(0);
+  window.showTab("history");
+
+} catch (err) {
+  Swal.fire("Error", err.message, "error");
+}
 
 /** ================== ADMIN (เด้งถามเฉพาะตอนกดปุ่ม) ================== **/
 window.requestAdmin = async function(e){
