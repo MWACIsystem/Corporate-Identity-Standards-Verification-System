@@ -790,7 +790,6 @@ window.showTab = function(tab, e){
 };
 
 /** ================== SUBMIT (กันหน้าขาวด้วย return false) ================== **/
-
 window.handleSubmit = async function(e){
   e.preventDefault();
 
@@ -809,22 +808,30 @@ window.handleSubmit = async function(e){
   try {
     Swal.fire({title:"กำลังบันทึก...", didOpen:()=>Swal.showLoading()});
 
+    // ✅ save Firebase
     await saveDataFirebase(data);
+
+    // ✅ save Sheet + Email (ใช้ URL จริงของหนู)
+    await fetch("https://script.google.com/macros/s/AKfycbxU2JG0Nlww5Ncgz5MCGDDNH_NhxXZwAL2YKTsC5jk4MCkhg2YPeIjSxmh4gFt1fwAJ/exec", {
+      method: "POST",
+      body: JSON.stringify(data)
+    });
 
     Swal.fire("สำเร็จ","บันทึกเรียบร้อย","success");
 
+    // ✅ refresh history
     historyData = [];
     currentPage = 0;
-    await window.renderHistory(0);
-    window.showTab("history");
+    await renderHistory(0);
+    showTab("history");
 
   } catch (err) {
     Swal.fire("Error", err.message, "error");
+    console.error(err);
   }
 
   return false;
 };
-
 
 /** ================== ADMIN (เด้งถามเฉพาะตอนกดปุ่ม) ================== **/
 
