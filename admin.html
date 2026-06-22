@@ -701,9 +701,8 @@ async function askEmailAccess(){
     }
   });
 
-  if(!formValues) return askEmailAccess();
+  if(!formValues) return renderAdmin();
 
-  google.script.run
     .withSuccessHandler(res => {
       console.log("ACCESS", res);
       if(res && res.access) renderAdmin();
