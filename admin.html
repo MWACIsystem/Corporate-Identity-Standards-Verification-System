@@ -660,22 +660,13 @@ window.saveAdmin = async function(id, btnEl) {
     const name = tr?.dataset?.name || "";
 
     // 1) update firestore
-    await db.collection("submissions").doc(id).update({
-      status,
-      comment,
-      by,
-      updatedAt: new Date()
-    });
 
-    // 2) update google sheet (ใช้ workUrl เป็น key)
-    if (workUrl) {
-      google.script.run.updateStatusByLink(workUrl, status, comment, by);
-    }
-
-    // 3) send email
-    if (email) {
-      google.script.run.sendEmailUpdate(email, name, status, comment, workUrl);
-    }
+await db.collection("submissions").doc(id).update({
+  status,
+  comment,
+  by,
+  updatedAt: new Date()
+});
 
 Swal.fire("สำเร็จ", "บันทึกข้อมูลแล้ว", "success");
 adminData = [];
@@ -726,8 +717,9 @@ async function askEmailAccess(){
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-  askEmailAccess();
+  renderAdmin();
 });
+
 
 </script>
 
