@@ -678,43 +678,7 @@ renderAdmin(adminPage);
 };
 
 /* EMAIL ACCESS */
-async function askEmailAccess(){
-  const { value: formValues } = await Swal.fire({
-    title: "เข้าสู่ระบบ Admin",
-    html: `
-      <input id="swal-admin-email" class="swal2-input" placeholder="Email">
-      <input id="swal-admin-password" type="password" class="swal2-input" placeholder="Password">
-    `,
-    focusConfirm: false,
-    confirmButtonText: "เข้าสู่ระบบ",
-    allowOutsideClick: false,
-    preConfirm: () => {
-      const email = document.getElementById("swal-admin-email").value.trim();
-      const password = document.getElementById("swal-admin-password").value;
-
-      if (!email || !password) {
-        Swal.showValidationMessage("กรุณากรอก Email และ Password ให้ครบ");
-        return false;
-      }
-
-      return { email, password };
-    }
-  });
-
-  if(!formValues) return renderAdmin();
-
-    .withSuccessHandler(res => {
-      console.log("ACCESS", res);
-      if(res && res.access) renderAdmin();
-      else document.getElementById("adminList").innerHTML = "⛔ Email หรือ Password ไม่ถูกต้อง";
-    })
-    .withFailureHandler(err => {
-      console.error(err);
-      document.getElementById("adminList").innerHTML = "❌ " + err.message;
-    })
-    .checkEmailManual(formValues.email, formValues.password);
-}
-
+  
 window.addEventListener("DOMContentLoaded", () => {
   renderAdmin();
 });
