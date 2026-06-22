@@ -678,10 +678,38 @@ renderAdmin(adminPage);
 };
 
 /* EMAIL ACCESS */
+
+async function askEmailAccess(){
+  const { value: formValues } = await Swal.fire({
+    title: "เข้าสู่ระบบ Admin",
+    html: `
+      <input id="email" class="swal2-input" placeholder="Email">
+      <input id="pass" type="password" class="swal2-input" placeholder="Password">
+    `,
+    preConfirm: () => {
+      const email = document.getElementById("email").value;
+      const pass = document.getElementById("pass").value;
+
+      if (email === "admin@mwa.co.th" && pass === "123456") {
+        return true;
+      } else {
+        Swal.showValidationMessage("Email หรือ Password ไม่ถูกต้อง");
+        return false;
+      }
+    }
+  });
+
+  if(formValues){
+    renderAdmin();
+  } else {
+    askEmailAccess();
+  }
+}
   
 window.addEventListener("DOMContentLoaded", () => {
-  renderAdmin();
+  askEmailAccess();
 });
+
 
 
 </script>
