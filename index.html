@@ -827,14 +827,9 @@ window.handleSubmit = async function(e){
 
 
 /** ================== ADMIN (เด้งถามเฉพาะตอนกดปุ่ม) ================== **/
-window.requestAdmin = async function(e){
+
+window.requestAdmin = function(e){
   if(e) e.preventDefault();
-
-  if(!WEBAPP_URL){
-    Swal.fire("Error", "ไม่พบ WEBAPP_URL จากระบบ", "error");
-    return;
-  }
-
   window.open("admin.html", "_blank");
 };
 
