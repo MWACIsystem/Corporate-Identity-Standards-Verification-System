@@ -157,11 +157,16 @@ footer{
 * ตารางหน้าประวัติ */
 #historyTab table.table{
   width: 100% !important;
-  table-layout: auto !important;
+  table-layout: fixed !important;
   border-collapse: collapse;
   border: 1px solid #e0e6ed;
 }
 
+#historyTab table.table td{
+  word-break: break-word;
+  white-space: normal;
+}
+ 
 /* หัวตาราง */
 #historyTab table.table th{
   white-space: nowrap;
@@ -385,7 +390,7 @@ footer{
 }
 
 #historyTab table.table td:nth-child(4),
-#historyTab table.table td:nth-child(13),{
+#historyTab table.table td:nth-child(13){
   font-size: 14px;
   line-height: 1.2;
 }
