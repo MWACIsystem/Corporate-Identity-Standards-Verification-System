@@ -294,6 +294,14 @@ footer{
   text-align: left !important;
 }
 
+.media-scroll{
+  max-height: 62px;
+  overflow: auto;
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: anywhere;   /* ✅ ตัวนี้สำคัญมาก */
+}
+
 //ลิงก์ชิ้นงาน//
 #historyTab table.table th:nth-child(9),
 #historyTab table.table td:nth-child(9){
@@ -376,12 +384,11 @@ footer{
   vertical-align: middle !important;
 }
 
-//หัวคอลัมน์ต้องยอมตัดบรรทัด//
-#historyTab table.table th:nth-child(13){
-  white-space: normal !important;
-  overflow-wrap: anywhere;
-  word-break: break-word;
-  line-height: 1.15;
+#historyTab table.table td:nth-child(13){
+  white-space: nowrap;
+  display: flex;
+  align-items: center;     /* แนวตั้งกลาง */
+  justify-content: center; /* แนวนอนกลาง */
 }
 
 //ข้อมูลวันที่ข้างล่างยังปกติ//
