@@ -755,7 +755,7 @@ window.renderHistory = async function(page = 0){
 
     html += `
       <tr>
-        <td>${i++}</td>
+        <td class="text-center">${i++}</td>
         <td>${r.firstName || ""}</td>
         <td>${r.lastName || ""}</td>
         <td>${createdDate}</td>
@@ -765,7 +765,7 @@ window.renderHistory = async function(page = 0){
         <td><div class="media-scroll">${r.mediaType || ""}</div></td>
         <td>${r.workUrl ? `<a href="${r.workUrl}" target="_blank">ชิ้นงาน</a>` : "-"}</td>
         <td><div class="detail-scroll">${r.description || ""}</div></td>
-        <td>${r.round || ""}</td>
+        <td class="text-center">${r.round || ""}</td>
         <td>${r.status || ""}</td>
         <td>${updatedDate}</td>
       </tr>
