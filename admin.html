@@ -13,7 +13,7 @@
 
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://unpkg.com/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 
 <style>
 body{
@@ -100,7 +100,7 @@ footer{
   text-align:center;
 }
 
-//ลำดับ//
+/*ลำดับ*/
 .table th:nth-child(1),
 .table td:nth-child(1){
   width: 60px;
@@ -114,7 +114,6 @@ table td:nth-child(1){
   word-break: break-word;
 }
 
-//ชื่อ//
 .table th:nth-child(2),
 .table td:nth-child(2){
   width: 100px;
@@ -128,7 +127,7 @@ table td:nth-child(2){
   word-break: break-word;
 }
 
-//นามสกุล//
+
 .table th:nth-child(3),
 .table td:nth-child(3){
   width: 100px;
@@ -142,7 +141,7 @@ table td:nth-child(3){
   word-break: break-word;
 }
 
-//วันที่ส่ง//
+
 .table th:nth-child(4),
 .table td:nth-child(4){
   width: 80px;
@@ -156,7 +155,7 @@ table td:nth-child(4){
   word-break: break-word;
 }
 
-//หน่วยงาน//
+
 .table th:nth-child(5),
 .table td:nth-child(5){
   width: 70px;
@@ -170,7 +169,7 @@ table td:nth-child(5){
   word-break: break-word;
 }
 
-//เบอร์//
+
 .table th:nth-child(6),
 .table td:nth-child(6){
   width: 70px;
@@ -184,7 +183,7 @@ table td:nth-child(6){
   word-break: break-word;
 }
 
-//email//
+
 .table th:nth-child(7),
 .table td:nth-child(7){
   width: 150px;
@@ -198,7 +197,7 @@ table td:nth-child(7){
   word-break: break-word;
 }
 
-//ประเภทสื่อ//
+
 .table th:nth-child(8),
 .table td:nth-child(8){
   width: 200px;
@@ -212,7 +211,7 @@ table td:nth-child(8){
   word-break: break-word;
 }
 
-//ชิ้นงาน//
+
 .table th:nth-child(9),
 .table td:nth-child(9){
   width: 70px;
@@ -226,7 +225,7 @@ table td:nth-child(9){
   word-break: break-word;
 }
 
-//รายละเอียด//
+
 .table th:nth-child(10),
 .table td:nth-child(10){
   width: 200px;
@@ -267,8 +266,6 @@ table td:nth-child(10){
   border-radius: 6px;
 }
 
-
-//รอบ//
 .table th:nth-child(11),
 .table td:nth-child(11){
   width: 50px;
@@ -282,7 +279,6 @@ table td:nth-child(11){
   word-break: break-word;
 }
 
-//สถานะ//
 .table th:nth-child(12),
 .table td:nth-child(12){
   width: 100px;
@@ -296,7 +292,6 @@ table td:nth-child(12){
   word-break: break-word;
 }
 
-//วันที่ให้ความเห็น//
 .table th:nth-child(13),
 .table td:nth-child(13){
   width: 80px;
@@ -310,7 +305,6 @@ table td:nth-child(13){
   word-break: break-word;
 }
 
-//ความคิดเห็น//
 .table th:nth-child(14),
 .table td:nth-child(14){
   width: 100px;
@@ -324,7 +318,6 @@ table td:nth-child(14){
   word-break: break-word;
 }
 
-//ผู้ให้ความเห็น//
 .table th:nth-child(15),
 .table td:nth-child(15){
   width: 100px;
@@ -338,11 +331,12 @@ table td:nth-child(15){
   word-break: break-word;
 }
 
-//บันทึก//
+/* ช่องจัดการ: ปุ่มบันทึกและไฟล์แนบ */
 .table th:nth-child(16),
-.table td:nth-child(16){
-  width: 60px;
-  max-width: 60px;
+.table td:nth-child(16) {
+  width: 100px;
+  min-width: 100px;
+  max-width: 100px;
   vertical-align: middle !important;
   text-align: center !important;
 }
@@ -409,8 +403,7 @@ table td:nth-child(16){
 
 </style>
 
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
 
 </head>
 
@@ -464,23 +457,34 @@ document.getElementById("adminList").innerHTML = "⏳ กำลังโหล�
 console.log("ADMIN START");
 
 
-const firebaseConfig = {
-  apiKey: "AIzaSy...",
-  authDomain: "ci-verification.firebaseapp.com",
-  projectId: "ci-verification"
-};
-
-// กัน initialize ซ้ำ
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
-
-const db = firebase.firestore();
-
 let adminData = [];
 let adminPage = 0;
 let adminSearchTerm = "";
+let adminToken = "";
+
 const ADMIN_PER_PAGE = 10;
+
+function gasCall(functionName, ...args) {
+  return new Promise((resolve, reject) => {
+    const runner = google.script.run
+      .withSuccessHandler(resolve)
+      .withFailureHandler(reject);
+
+    runner[functionName](...args);
+  });
+}
+
+function formatThaiDate(value) {
+  if (!value) return "-";
+
+  const date = value.seconds
+    ? new Date(value.seconds * 1000)
+    : new Date(value);
+
+  return isNaN(date.getTime())
+    ? "-"
+    : date.toLocaleDateString("th-TH");
+}
 
 window.handleAdminSearch = function(value){
   adminSearchTerm = value.trim().toLowerCase();
@@ -488,37 +492,403 @@ window.handleAdminSearch = function(value){
   renderAdmin(0);
 };
 
+// ================= ATTACHMENT HELPERS =================
+
+function escapeHtml(value) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[char]);
+}
+
+function renderAttachmentList(attachments) {
+
+  if (!Array.isArray(attachments) || attachments.length === 0) {
+    return `<div class="text-muted">ยังไม่มีไฟล์แนบ</div>`;
+  }
+
+  return `
+    <ol style="text-align:left;padding-left:22px;">
+      ${attachments.map(a => `
+        <li style="margin-bottom:8px;">
+          <a href="${escapeHtml(a.url)}"
+             target="_blank"
+             rel="noopener noreferrer">
+            📎 ${escapeHtml(a.name)}
+          </a>
+          ${
+            a.shared === false
+              ? `<div style="font-size:12px;color:#dc3545;">
+                   ยังไม่สามารถแชร์ไฟล์ให้ผู้ส่งได้
+                 </div>`
+              : ""
+          }
+        </li>
+      `).join("")}
+    </ol>
+  `;
+}
+
+// แปลงไฟล์เป็น Base64 ก่อนส่งให้ Apps Script
+function fileToBase64(file) {
+
+  return new Promise((resolve, reject) => {
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      const result = String(reader.result);
+      resolve(result.split(",")[1] || "");
+    };
+
+    reader.onerror = () => {
+      reject(new Error("อ่านไฟล์ไม่สำเร็จ"));
+    };
+
+    reader.readAsDataURL(file);
+  });
+}
+
+// เรียก Google Apps Script
+function gasUploadAdminAttachment(base64, name, type, email, token) {
+
+  return new Promise((resolve, reject) => {
+
+    google.script.run
+      .withSuccessHandler(resolve)
+      .withFailureHandler(reject)
+      .uploadAdminAttachment(base64, name, type, email, token);
+
+  });
+}
+
+function gasUpdateAttachmentsByLink(workUrl, attachments, token) {
+
+  return new Promise((resolve, reject) => {
+
+    google.script.run
+      .withSuccessHandler(resolve)
+      .withFailureHandler(reject)
+      .updateAttachmentsByLink(workUrl, attachments, token);
+
+  });
+}
+
+function gasUpdateStatusByLink(workUrl, status, comment, by, attachments, token) {
+
+  return new Promise((resolve, reject) => {
+
+    google.script.run
+      .withSuccessHandler(resolve)
+      .withFailureHandler(reject)
+      .updateStatusByLink(workUrl, status, comment, by, attachments, token);
+
+  });
+}
+
+function gasSendEmailUpdate(email, name, status, comment, link, attachments, token) {
+
+  return new Promise((resolve, reject) => {
+
+    google.script.run
+      .withSuccessHandler(resolve)
+      .withFailureHandler(reject)
+      .sendEmailUpdate(email, name, status, comment, link, attachments, token);
+
+  });
+}
+
+function gasLoadAdminData(token) {
+  return gasCall("getAdminFromFirestore", token);
+}
+
+function gasAddAttachment(id, attachment, token) {
+  return gasCall("addAttachmentFirestore", id, attachment, token);
+}
+
+function gasUpdateSubmission(id, status, comment, by, token) {
+  return gasCall(
+    "updateSubmissionFirestore",
+    id,
+    status,
+    comment,
+    by,
+    token
+  );
+}
+
+// ================= MANAGE ATTACHMENTS =================
+
+window.manageAttachments = async function(id) {
+
+  const record = adminData.find(d => d.id === id);
+
+  if (!record) {
+    Swal.fire("Error", "ไม่พบข้อมูลชิ้นงาน", "error");
+    return;
+  }
+
+  const attachments = record.attachments || [];
+
+  const result = await Swal.fire({
+
+    title: "📎 ไฟล์ประกอบการพิจารณา",
+
+    html: `
+      <div style="
+        background:#f5f9fc;
+        padding:15px;
+        border-radius:10px;
+        margin-bottom:15px;
+        text-align:left;
+      ">
+        <strong style="color:#065BAA;">ไฟล์ที่แนบไว้แล้ว</strong>
+
+        <div style="margin-top:10px;">
+          ${renderAttachmentList(attachments)}
+        </div>
+      </div>
+
+      <div style="text-align:left;">
+        <label style="font-weight:600;margin-bottom:8px;">
+          เลือกไฟล์ที่ต้องการแนบเพิ่มเติม
+        </label>
+
+        <input
+          type="file"
+          id="adminAttachmentInput"
+          class="form-control"
+          accept="image/*,application/pdf"
+          multiple
+        >
+
+        <small style="color:#777;">
+          รองรับ JPG, PNG, GIF, WebP, HEIC และ PDF
+          ขนาดไม่เกิน 10 MB ต่อไฟล์
+        </small>
+      </div>
+    `,
+
+    width: 600,
+    showCancelButton: true,
+    confirmButtonText: "📤 อัปโหลดไฟล์",
+    cancelButtonText: "ปิด",
+
+    preConfirm: () => {
+
+      const input = document.getElementById("adminAttachmentInput");
+      const files = Array.from(input.files || []);
+
+      if (files.length === 0) {
+        Swal.showValidationMessage("กรุณาเลือกไฟล์ที่ต้องการอัปโหลด");
+        return false;
+      }
+
+      return files;
+    }
+
+  });
+
+  if (!result.isConfirmed) return;
+
+  await uploadAdminFiles(id, result.value);
+};
+
+// ================= UPLOAD ADMIN FILES =================
+
+async function uploadAdminFiles(id, files) {
+
+  const record = adminData.find(d => d.id === id);
+
+  if (!record) return;
+
+  if (!adminToken) {
+    Swal.fire("Error", "กรุณาเข้าสู่ระบบ Admin ใหม่", "error");
+    return;
+  }
+
+  const allowedTypes = [
+    "image/jpeg",
+    "image/png",
+    "image/gif",
+    "image/webp",
+    "image/heic",
+    "image/heif",
+    "application/pdf"
+  ];
+
+  if (files.length > 5) {
+    Swal.fire("แจ้งเตือน", "อัปโหลดได้ไม่เกิน 5 ไฟล์ต่อครั้ง", "warning");
+    return;
+  }
+
+  for (const file of files) {
+
+    if (!allowedTypes.includes(file.type)) {
+      Swal.fire("แจ้งเตือน", `ไม่รองรับไฟล์ ${file.name}`, "warning");
+      return;
+    }
+
+    if (file.size > 10 * 1024 * 1024) {
+      Swal.fire("แจ้งเตือน", `ไฟล์ ${file.name} มีขนาดเกิน 10 MB`, "warning");
+      return;
+    }
+  }
+
+  let uploadedCount = 0;
+  const warnings = [];
+
+  Swal.fire({
+    title: "กำลังอัปโหลดไฟล์...",
+    text: "กรุณาอย่าปิดหน้าต่างนี้",
+    allowOutsideClick: false,
+    didOpen: () => Swal.showLoading()
+  });
+
+  try {
+
+    // อัปโหลดทีละไฟล์
+    for (const file of files) {
+
+      const base64 = await fileToBase64(file);
+
+      const result = await gasUploadAdminAttachment(
+        base64,
+        file.name,
+        file.type,
+        record.email || "",
+        adminToken
+      );
+
+      if (!result || result.status !== "success" || !result.attachment) {
+        throw new Error("ไม่สามารถอัปโหลดไฟล์ " + file.name);
+      }
+
+// แปลงข้อมูลที่ได้จาก Google Apps Script
+// ให้เป็น Plain Object ก่อนส่งเข้า Firestore
+const attachment = {
+  id: String(result.attachment.id || ""),
+  name: String(result.attachment.name || ""),
+  url: String(result.attachment.url || ""),
+  mimeType: String(result.attachment.mimeType || ""),
+  size: Number(result.attachment.size || 0),
+  uploadedAt: String(result.attachment.uploadedAt || ""),
+  shared: Boolean(result.attachment.shared),
+  shareMessage: String(result.attachment.shareMessage || "")
+};
+
+// บันทึกข้อมูลไฟล์ผ่าน Apps Script
+const saveResult = await gasAddAttachment(
+  id,
+  attachment,
+  adminToken
+);
+
+if (!saveResult || saveResult.status !== "success") {
+  throw new Error("ไม่สามารถบันทึกข้อมูลไฟล์ลง Firestore ได้");
+}
+
+record.attachments = saveResult.attachments || [];
+
+uploadedCount++;
+
+if (!attachment.shared) {
+  warnings.push(attachment.name);
+}
+
+// ปิด for loop หลังอัปโหลดไฟล์ครบทุกไฟล์
+}
+
+
+// ใช้รายการไฟล์แนบล่าสุดที่ Apps Script ส่งกลับมา
+const allAttachments = record.attachments || [];
+
+    // Sync ลิงก์ไฟล์ลง Google Sheet
+    if (record.workUrl) {
+
+      try {
+
+        const sheetResult = await gasUpdateAttachmentsByLink(
+          record.workUrl,
+          allAttachments,
+          adminToken
+        );
+
+        if (!sheetResult || sheetResult.status !== "success") {
+          warnings.push("ไม่สามารถอัปเดต Google Sheet ได้");
+        }
+
+      } catch (err) {
+        warnings.push("ไม่สามารถอัปเดต Google Sheet ได้");
+      }
+    }
+
+    // โหลดรายการใหม่
+    adminData = [];
+    await renderAdmin(adminPage);
+
+    let message = `อัปโหลดสำเร็จ ${uploadedCount} ไฟล์`;
+
+    if (warnings.length > 0) {
+      message += "\n\nคำเตือน: " + warnings.join(", ");
+    }
+
+    Swal.fire({
+      title: "ดำเนินการเรียบร้อย",
+      text: message,
+      icon: warnings.length > 0 ? "warning" : "success"
+    });
+
+  } catch (err) {
+
+    console.error(err);
+
+    if (uploadedCount > 0) {
+
+      adminData = [];
+      await renderAdmin(adminPage);
+
+      Swal.fire(
+        "อัปโหลดได้บางส่วน",
+        `อัปโหลดสำเร็จ ${uploadedCount} ไฟล์\n${err.message}`,
+        "warning"
+      );
+
+    } else {
+
+      Swal.fire("อัปโหลดไม่สำเร็จ", err.message, "error");
+
+    }
+  }
+}
+
 /* LOAD ADMIN DATA */
 async function renderAdmin(page = 0) {
   try {
+    // โหลดข้อมูลจาก Firestore ผ่าน Apps Script
     if (adminData.length === 0) {
-      const snapshot = await db
-        .collection("submissions")
-        .orderBy("createdAt", "desc")
-        .limit(50)
-        .get();
-
-      if (snapshot.empty) {
-        document.getElementById("adminList").innerHTML = "ไม่มีข้อมูล";
-        return;
+      if (!adminToken) {
+        throw new Error("กรุณาเข้าสู่ระบบ Admin");
       }
 
-      adminData = snapshot.docs.map(docSnap => ({
-        id: docSnap.id,
-        ...docSnap.data()
-      }));
+      const result = await gasLoadAdminData(adminToken);
+      adminData = Array.isArray(result) ? result : [];
+    }
+
+    if (adminData.length === 0) {
+      document.getElementById("adminList").innerHTML = "ไม่มีข้อมูล";
+      return;
     }
 
     adminPage = page;
 
+    // ค้นหาข้อมูล
     const filteredAdminData = adminData.filter(d => {
-      const createdDate = d.createdAt?.seconds
-        ? new Date(d.createdAt.seconds * 1000).toLocaleDateString("th-TH")
-        : "-";
-
-      const updatedDate = d.updatedAt?.seconds
-        ? new Date(d.updatedAt.seconds * 1000).toLocaleDateString("th-TH")
-        : "-";
+      const createdDate = formatThaiDate(d.createdAt);
+      const updatedDate = formatThaiDate(d.updatedAt);
 
       const text = `
         ${d.firstName || ""}
@@ -540,8 +910,9 @@ async function renderAdmin(page = 0) {
       return text.includes(adminSearchTerm);
     });
 
-    if(filteredAdminData.length === 0){
-      document.getElementById("adminList").innerHTML = adminSearchTerm ? "ไม่พบข้อมูลที่ค้นหา" : "ไม่มีข้อมูล";
+    if (filteredAdminData.length === 0) {
+      document.getElementById("adminList").innerHTML =
+        adminSearchTerm ? "ไม่พบข้อมูลที่ค้นหา" : "ไม่มีข้อมูล";
       return;
     }
 
@@ -568,138 +939,265 @@ async function renderAdmin(page = 0) {
         <th>วันที่ให้ความเห็น</th>
         <th>ความคิดเห็น</th>
         <th>ผู้ให้ความเห็น</th>
-        <th>บันทึก</th>
+        <th>บันทึก / ไฟล์แนบ</th>
       </tr>
     `;
 
     let i = start + 1;
 
     pageData.forEach(d => {
-      const id = d.id;
+      const id = String(d.id || "");
+      const createdDate = formatThaiDate(d.createdAt);
+      const updatedDate = formatThaiDate(d.updatedAt);
+      const attachments = Array.isArray(d.attachments)
+        ? d.attachments
+        : [];
 
-      const createdDate = d.createdAt?.seconds
-        ? new Date(d.createdAt.seconds * 1000).toLocaleDateString("th-TH")
-        : "-";
-
-      const updatedDate = d.updatedAt?.seconds
-        ? new Date(d.updatedAt.seconds * 1000).toLocaleDateString("th-TH")
-        : "-";
+      const workUrl = String(d.workUrl || "");
+      const safeWorkUrl = /^https?:\/\//i.test(workUrl)
+        ? escapeHtml(workUrl)
+        : "";
 
       html += `
-        <tr data-workurl="${(d.workUrl || "").replace(/"/g, "&quot;")}"
-            data-email="${(d.email || "").replace(/"/g, "&quot;")}"
-            data-name="${((d.firstName||"") + " " + (d.lastName||"")).replace(/"/g, "&quot;")}">
+        <tr
+          data-workurl="${escapeHtml(workUrl)}"
+          data-email="${escapeHtml(d.email || "")}"
+          data-name="${escapeHtml((d.firstName || "") + " " + (d.lastName || ""))}"
+        >
           <td>${i++}</td>
-          <td>${d.firstName || ""}</td>
-          <td>${d.lastName || ""}</td>
+          <td>${escapeHtml(d.firstName)}</td>
+          <td>${escapeHtml(d.lastName)}</td>
           <td>${createdDate}</td>
-          <td>${d.department || ""}</td>
-          <td>${d.phone || ""}</td>
-          <td>${d.email || ""}</td>
-          <td><div class="media-scroll-admin">${d.mediaType || ""}</div></td>
-          <td><a href="${d.workUrl || "#"}" target="_blank">ชิ้นงาน</a></td>
-          <td><div class="detail-scroll-admin">${d.description || ""}</div></td>
-          <td>${d.round || ""}</td>
+          <td>${escapeHtml(d.department)}</td>
+          <td>${escapeHtml(d.phone)}</td>
+          <td>${escapeHtml(d.email)}</td>
+          <td>
+            <div class="media-scroll-admin">
+              ${escapeHtml(d.mediaType)}
+            </div>
+          </td>
+          <td>
+            ${
+              safeWorkUrl
+                ? `<a href="${safeWorkUrl}" target="_blank" rel="noopener noreferrer">ชิ้นงาน</a>`
+                : "-"
+            }
+          </td>
+          <td>
+            <div class="detail-scroll-admin">
+              ${escapeHtml(d.description)}
+            </div>
+          </td>
+          <td>${escapeHtml(d.round)}</td>
 
           <td>
-            <select id="status_${id}" class="form-select form-select-sm">
-              <option value="รอพิจารณา" ${d.status==="รอพิจารณา" ? "selected":""}>รอพิจารณา</option>
-              <option value="ปรับแก้" ${d.status==="ปรับแก้" ? "selected":""}>ปรับแก้</option>
-              <option value="เห็นชอบ" ${d.status==="เห็นชอบ" ? "selected":""}>เห็นชอบ</option>
+            <select id="status_${escapeHtml(id)}" class="form-select form-select-sm">
+              <option value="รอพิจารณา" ${d.status === "รอพิจารณา" ? "selected" : ""}>รอพิจารณา</option>
+              <option value="ปรับแก้" ${d.status === "ปรับแก้" ? "selected" : ""}>ปรับแก้</option>
+              <option value="เห็นชอบ" ${d.status === "เห็นชอบ" ? "selected" : ""}>เห็นชอบ</option>
             </select>
           </td>
 
           <td>${updatedDate}</td>
 
           <td>
-            <textarea id="comment_${id}" class="form-control" rows="3">${d.comment || ""}</textarea>
+            <textarea
+              id="comment_${escapeHtml(id)}"
+              class="form-control"
+              rows="3"
+            >${escapeHtml(d.comment)}</textarea>
           </td>
 
           <td>
-            <input id="by_${id}" class="form-control" value="${d.by || ""}">
+            <input
+              id="by_${escapeHtml(id)}"
+              class="form-control"
+              value="${escapeHtml(d.by)}"
+            >
           </td>
 
           <td>
-            <button class="btn btn-success btn-sm" onclick="saveAdmin('${id}', this)">💾</button>
+            <div class="d-flex flex-column gap-1 align-items-center">
+              <button
+                class="btn btn-outline-primary btn-sm"
+                onclick="manageAttachments('${escapeHtml(id)}')"
+                title="แนบไฟล์ประกอบการพิจารณา"
+              >
+                📎 ${attachments.length}
+              </button>
+
+              <button
+                class="btn btn-success btn-sm"
+                onclick="saveAdmin('${escapeHtml(id)}', this)"
+              >
+                💾
+              </button>
+            </div>
           </td>
         </tr>
       `;
     });
 
     html += `</table>`;
-
     html += `<div style="text-align:center;margin-top:15px;">`;
-    if(page > 0){
-      html += `<button class="btn btn-secondary btn-sm" onclick="renderAdmin(${page-1})">⬅️ ก่อนหน้า</button> `;
+
+    if (page > 0) {
+      html += `
+        <button class="btn btn-secondary btn-sm"
+          onclick="renderAdmin(${page - 1})">
+          ⬅️ ก่อนหน้า
+        </button>
+      `;
     }
-    if(end < filteredAdminData.length){
-      html += `<button class="btn btn-primary btn-sm" onclick="renderAdmin(${page+1})">ถัดไป ➡️</button>`;
+
+    if (end < filteredAdminData.length) {
+      html += `
+        <button class="btn btn-primary btn-sm"
+          onclick="renderAdmin(${page + 1})">
+          ถัดไป ➡️
+        </button>
+      `;
     }
+
     html += `</div></div>`;
 
     document.getElementById("adminList").innerHTML = html;
 
   } catch (err) {
     console.error(err);
+
     document.getElementById("adminList").innerHTML =
-      "<div style='color:red'>" + err.message + "</div>";
+      "<div style='color:red'>โหลดข้อมูลไม่สำเร็จ: " +
+      escapeHtml(err.message) +
+      "</div>";
   }
 }
 
-/* SAVE */
+// ================= SAVE ADMIN =================
+
 window.saveAdmin = async function(id, btnEl) {
   try {
     const status = document.getElementById(`status_${id}`).value;
     const comment = document.getElementById(`comment_${id}`).value;
     const by = document.getElementById(`by_${id}`).value;
 
-    // ✅ ดึงข้อมูลจากแถว เพื่อ sync sheet/email
     const tr = btnEl.closest("tr");
     const workUrl = tr?.dataset?.workurl || "";
     const email = tr?.dataset?.email || "";
     const name = tr?.dataset?.name || "";
 
-    // 1) update firestore
-    await db.collection("submissions").doc(id).update({
-      status,
-      comment,
-      by,
-      updatedAt: new Date()
+    const record = adminData.find(d => d.id === id);
+    const attachments = record?.attachments || [];
+
+    if (!adminToken) {
+      throw new Error("Session หมดอายุ กรุณาเข้าสู่ระบบใหม่");
+    }
+
+    Swal.fire({
+      title: "กำลังบันทึกข้อมูล...",
+      allowOutsideClick: false,
+      didOpen: () => Swal.showLoading()
     });
 
-    // 2) update google sheet (ใช้ workUrl เป็น key)
+    // 1. อัปเดตข้อมูลใน Firestore ผ่าน Apps Script
+    const updateResult = await gasUpdateSubmission(
+  id,
+  status,
+  comment,
+  by,
+  adminToken
+);
+
+if (!updateResult || updateResult.status !== "success") {
+  throw new Error("ไม่สามารถบันทึกข้อมูลลง Firestore ได้");
+}
+
+    record.status = status;
+    record.comment = comment;
+    record.by = by;
+    record.updatedAt = {
+      seconds: Math.floor(Date.now() / 1000)
+    };
+
+    // 2. อัปเดต Google Sheet
     if (workUrl) {
-      google.script.run.updateStatusByLink(workUrl, status, comment, by);
+      const sheetResult = await gasUpdateStatusByLink(
+        workUrl, status, comment, by, attachments, adminToken
+      );
+
+      if (!sheetResult || sheetResult.status !== "success") {
+        throw new Error(
+          "บันทึก Firestore แล้ว แต่ไม่สามารถอัปเดต Google Sheet ได้"
+        );
+      }
     }
 
-    // 3) send email
+    // 3. ส่งอีเมลแจ้งผล
     if (email) {
-      google.script.run.sendEmailUpdate(email, name, status, comment, workUrl);
+      const mailResult = await gasSendEmailUpdate(
+        email, name, status, comment, workUrl, attachments, adminToken
+      );
+
+      if (!mailResult || mailResult.status !== "sent") {
+        throw new Error(
+          "บันทึกข้อมูลแล้ว แต่ไม่สามารถส่งอีเมลได้"
+        );
+      }
     }
 
-Swal.fire("สำเร็จ", "บันทึกข้อมูลแล้ว", "success");
-adminData = [];
-renderAdmin(adminPage);
+    Swal.fire(
+      "สำเร็จ",
+      "บันทึกข้อมูลและส่งผลการตรวจสอบเรียบร้อยแล้ว",
+      "success"
+    );
+
+    adminData = [];
+    await renderAdmin(adminPage);
 
   } catch (err) {
+    console.error(err);
     Swal.fire("ERROR", err.message, "error");
   }
 };
 
-/* EMAIL ACCESS */
-async function askEmailAccess(){
+
+/* ================= EMAIL ACCESS ================= */
+
+async function askEmailAccess() {
+
   const { value: formValues } = await Swal.fire({
+
     title: "เข้าสู่ระบบ Admin",
+
     html: `
-      <input id="swal-admin-email" class="swal2-input" placeholder="Email">
-      <input id="swal-admin-password" type="password" class="swal2-input" placeholder="Password">
+      <input
+        id="swal-admin-email"
+        class="swal2-input"
+        placeholder="Email"
+        type="email"
+      >
+
+      <input
+        id="swal-admin-password"
+        type="password"
+        class="swal2-input"
+        placeholder="Password"
+      >
     `,
+
     focusConfirm: false,
     confirmButtonText: "เข้าสู่ระบบ",
     allowOutsideClick: false,
+
     preConfirm: () => {
-      const email = document.getElementById("swal-admin-email").value.trim();
-      const password = document.getElementById("swal-admin-password").value;
+
+      const email = document
+        .getElementById("swal-admin-email")
+        .value.trim();
+
+      const password = document
+        .getElementById("swal-admin-password")
+        .value;
 
       if (!email || !password) {
         Swal.showValidationMessage("กรุณากรอก Email และ Password ให้ครบ");
@@ -708,26 +1206,66 @@ async function askEmailAccess(){
 
       return { email, password };
     }
+
   });
 
-  if(!formValues) return askEmailAccess();
+  if (!formValues) return;
 
   google.script.run
+
     .withSuccessHandler(res => {
+
       console.log("ACCESS", res);
-      if(res && res.access) renderAdmin();
-      else document.getElementById("adminList").innerHTML = "⛔ Email หรือ Password ไม่ถูกต้อง";
+
+      if (res && res.access && res.token) {
+
+        adminToken = res.token;
+
+        renderAdmin();
+
+      } else {
+
+        adminToken = "";
+
+        Swal.fire({
+          title: "เข้าสู่ระบบไม่สำเร็จ",
+          text: "Email หรือ Password ไม่ถูกต้อง",
+          icon: "error",
+          confirmButtonText: "ลองอีกครั้ง"
+        }).then(() => {
+          askEmailAccess();
+        });
+
+      }
+
     })
+
     .withFailureHandler(err => {
-      console.error(err);
-      document.getElementById("adminList").innerHTML = "❌ " + err.message;
+
+      console.error("LOGIN ERROR", err);
+
+      Swal.fire({
+        title: "เกิดข้อผิดพลาด",
+        text: err.message || "ไม่สามารถเข้าสู่ระบบได้",
+        icon: "error",
+        confirmButtonText: "ลองอีกครั้ง"
+      }).then(() => {
+        askEmailAccess();
+      });
+
     })
+
     .checkEmailManual(formValues.email, formValues.password);
+
 }
 
-window.addEventListener("DOMContentLoaded", () => {
+// เรียก Popup Login ทันทีเมื่อ JavaScript ทำงานถึงจุดนี้
+if (typeof Swal === "undefined") {
+  document.getElementById("adminList").innerHTML =
+    "<div style='color:red'>ไม่สามารถโหลดระบบ Popup ได้ กรุณาตรวจสอบ SweetAlert2</div>";
+} else {
   askEmailAccess();
-});
+}
 
 </script>
 
