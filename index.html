@@ -162,7 +162,7 @@ footer{
   margin: 0;
 }
 
-/* ตารางหน้าประวัติ */
+* ตารางหน้าประวัติ */
 #historyTab table.table{
   width: 100% !important;
   table-layout: auto !important;
@@ -187,7 +187,7 @@ footer{
   vertical-align: middle !important;
 }
 
-/*ลำดับ*/
+//ลำดับ//
 #historyTab table.table th:nth-child(1),
 #historyTab table.table td:nth-child(1){
   text-align: center !important;
@@ -201,7 +201,7 @@ footer{
   word-break: break-word;
 }
 
-/*ชื่อ*/
+//ชื่อ//
 #historyTab table.table th:nth-child(2),
 #historyTab table.table td:nth-child(2){
   text-align: center !important;
@@ -215,7 +215,7 @@ footer{
   word-break: break-word;
 }
 
-/*นามสกุล*/
+//นามสกุล//
 #historyTab table.table th:nth-child(3),
 #historyTab table.table td:nth-child(3){
   text-align: center !important;
@@ -229,7 +229,7 @@ footer{
   word-break: break-word;
 }
 
-/*วันที่ส่งชิ้นงาน*/
+//วันที่ส่งชิ้นงาน//
 #historyTab table.table th:nth-child(4),
 #historyTab table.table td:nth-child(4){
   text-align: center !important;
@@ -243,7 +243,7 @@ footer{
   word-break: break-word;
 }
 
-/*หน่วยงาน*/
+//หน่วยงาน//
 #historyTab table.table th:nth-child(5),
 #historyTab table.table td:nth-child(5){
   text-align: center !important;
@@ -257,7 +257,7 @@ footer{
   word-break: break-word;
 }
 
-/*เบอร์*/
+//เบอร์//
 #historyTab table.table th:nth-child(6),
 #historyTab table.table td:nth-child(6){
   text-align: center !important;
@@ -271,7 +271,7 @@ footer{
   word-break: break-word;
 }
 
-/*Email ให้อยู่กึ่งกลางจริง*/
+//Email ให้อยู่กึ่งกลางจริง//
 #historyTab table.table th:nth-child(7),
 #historyTab table.table td:nth-child(7){
   text-align: center !important;
@@ -280,13 +280,13 @@ footer{
   max-width: 150px;
 }
 
-/*ถ้า email ยาว ให้ตัดคำแบบยังอยู่กลาง*/
+//ถ้า email ยาว ให้ตัดคำแบบยังอยู่กลาง//
 #historyTab table.table td:nth-child(7){
   white-space: normal;
   word-break: break-word;
 }
 
-/*ประเภทสื่อ*/
+//ประเภทสื่อ//
 #historyTab table.table th:nth-child(8),
 #historyTab table.table td:nth-child(8){
   width: 200px;
@@ -297,7 +297,7 @@ footer{
   text-align: left !important;
 }
 
-/*ลิงก์ชิ้นงาน*/
+//ลิงก์ชิ้นงาน//
 #historyTab table.table th:nth-child(9),
 #historyTab table.table td:nth-child(9){
   width: 70px;
@@ -305,7 +305,7 @@ footer{
   text-align: center !important;
 }
 
-/*รายละเอียด*/
+//รายละเอียด//
 #historyTab table.table th:nth-child(10),
 #historyTab table.table td:nth-child(10){
   width: 200px;
@@ -346,7 +346,7 @@ footer{
   border-radius: 6px;
 }
 
-/*รอบ*/
+//รอบ//
 #historyTab table.table th:nth-child(11),
 #historyTab table.table td:nth-child(11){
   text-align: center !important;
@@ -360,7 +360,7 @@ footer{
   word-break: break-word;
 }
 
-/*สถานะ*/
+//สถานะ//
 #historyTab table.table td:nth-child(12){
   white-space: normal;
   word-break: break-word;
@@ -369,7 +369,7 @@ footer{
   max-width: 150px;
 }
 
-/*วันที่ให้ความเห็น*/
+//วันที่ให้ความเห็น//
 #historyTab table.table th:nth-child(13),
 #historyTab table.table td:nth-child(13){
   width: 100px;
@@ -379,7 +379,7 @@ footer{
   vertical-align: middle !important;
 }
 
-/*หัวคอลัมน์ต้องยอมตัดบรรทัด*/
+//หัวคอลัมน์ต้องยอมตัดบรรทัด//
 #historyTab table.table th:nth-child(13){
   white-space: normal !important;
   overflow-wrap: anywhere;
@@ -387,7 +387,7 @@ footer{
   line-height: 1.15;
 }
 
-/*ข้อมูลวันที่ข้างล่างยังปกติ*/
+//ข้อมูลวันที่ข้างล่างยังปกติ//
 #historyTab table.table td:nth-child(13){
   white-space: nowrap;
 }
@@ -400,11 +400,6 @@ footer{
   line-height: 1.2;
 }
 
-#historyTab table.table td:nth-child(1),
-#historyTab table.table td:nth-child(11) {
-  text-align: center !important;
-}
- 
 /* media scroll ให้เป็นสีฟ้าเหมือนที่น้องต้องการ */
 .media-scroll{
   max-height: 62px;
@@ -598,7 +593,7 @@ footer{
   </div>
 </footer>
 
-<script type="module" crossorigin="anonymous">
+<script>
 /** ================== CONFIG ================== **/
 const WEBAPP_URL = (window.APP_CONFIG?.WEBAPP_URL || "").replace(/"/g, "");
 
@@ -606,92 +601,94 @@ const WEBAPP_URL = (window.APP_CONFIG?.WEBAPP_URL || "").replace(/"/g, "");
 let currentPage = 0;
 let historyData = [];
 let historySearchTerm = "";
+let historyLoaded = false;
 
-/** ================== FIREBASE ================== **/
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  getDocs,
-  query,
-  orderBy,
-  limit
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+/** ================== GOOGLE APPS SCRIPT HELPERS ================== **/
 
-const firebaseConfig = {
-  apiKey: "AIzaSy...",
-  authDomain: "ci-verification.firebaseapp.com",
-  projectId: "ci-verification",
-};
+function gasCall(functionName, ...args) {
+  return new Promise((resolve, reject) => {
+    const runner = google.script.run
+      .withSuccessHandler(resolve)
+      .withFailureHandler(reject);
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-/** ================== HELPERS ================== **/
-async function saveDataFirebase(data){
-  await addDoc(collection(db, "submissions"), {
-    ...data,
-    status: "รอพิจารณา",
-    createdAt: new Date()
+    runner[functionName](...args);
   });
 }
 
-async function loadHistory(){
-  // โหลดครั้งเดียว ถ้าเคยโหลดแล้วไม่โหลดซ้ำ
-  if (historyData.length > 0) return;
+/** ================== LOAD HISTORY ================== **/
+
+async function loadHistory(forceReload = false) {
+  if (historyLoaded && !forceReload) return;
 
   const box = document.getElementById("historyList");
   if (box) box.innerHTML = "⏳ กำลังโหลดข้อมูล...";
 
   try {
-    const q = query(
-      collection(db,"submissions"),
-      orderBy("createdAt","desc"),
-      limit(100)
-    );
+    const result = await gasCall("getHistoryFromFirestore");
 
-    const snapshot = await getDocs(q);
-
-    if(snapshot.empty){
-      historyData = [];
-      return;
-    }
-
-    historyData = snapshot.docs.map(d => d.data());
+    historyData = Array.isArray(result) ? result : [];
+    historyLoaded = true;
 
   } catch (err) {
     console.error(err);
-    if (box) box.innerHTML = `<div style="color:red">โหลดประวัติไม่สำเร็จ: ${err.message}</div>`;
-    // ไม่ throw เพื่อกันหน้า “ค้าง”
+    historyLoaded = false;
+
+    if (box) {
+      box.innerHTML =
+        `<div style="color:red">โหลดประวัติไม่สำเร็จ: ${escapeHtml(err.message)}</div>`;
+    }
   }
 }
 
-window.handleHistorySearch = function(value){
+/** ================== HTML HELPER ================== **/
+
+function escapeHtml(value) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[char]);
+}
+
+function formatThaiDate(value) {
+  if (!value) return "-";
+
+  let date;
+
+  if (value.seconds) {
+    date = new Date(value.seconds * 1000);
+  } else {
+    date = new Date(value);
+  }
+
+  return isNaN(date.getTime())
+    ? "-"
+    : date.toLocaleDateString("th-TH");
+}
+
+/** ================== SEARCH HISTORY ================== **/
+
+window.handleHistorySearch = function(value) {
   historySearchTerm = value.trim().toLowerCase();
   currentPage = 0;
   window.renderHistory(0);
 };
 
-//==== Render History ====
-window.renderHistory = async function(page = 0){
+/** ================== RENDER HISTORY ================== **/
+
+window.renderHistory = async function(page = 0) {
   await loadHistory();
 
   const box = document.getElementById("historyList");
   if (!box) return;
 
-  const filteredData = historyData.filter(r => {
-    const createdDate = r.createdAt
-      ? new Date(
-          r.createdAt.seconds ? r.createdAt.seconds * 1000 : r.createdAt
-        ).toLocaleDateString("th-TH")
-      : "-";
+  if (!historyLoaded) return;
 
-    const updatedDate = r.updatedAt
-      ? new Date(
-          r.updatedAt.seconds ? r.updatedAt.seconds * 1000 : r.updatedAt
-        ).toLocaleDateString("th-TH")
-      : "-";
+  const filteredData = historyData.filter(r => {
+    const createdDate = formatThaiDate(r.createdAt);
+    const updatedDate = formatThaiDate(r.updatedAt);
 
     const text = `
       ${r.firstName || ""}
@@ -711,8 +708,10 @@ window.renderHistory = async function(page = 0){
     return text.includes(historySearchTerm);
   });
 
-  if(filteredData.length === 0){
-    box.innerHTML = historySearchTerm ? "ไม่พบข้อมูลที่ค้นหา" : "ไม่มีข้อมูล";
+  if (filteredData.length === 0) {
+    box.innerHTML = historySearchTerm
+      ? "ไม่พบข้อมูลที่ค้นหา"
+      : "ไม่มีข้อมูล";
     return;
   }
 
@@ -721,7 +720,6 @@ window.renderHistory = async function(page = 0){
   const perPage = 10;
   const start = page * perPage;
   const end = start + perPage;
-
   const data = filteredData.slice(start, end);
 
   let html = `
@@ -746,123 +744,134 @@ window.renderHistory = async function(page = 0){
   let i = start + 1;
 
   data.forEach(r => {
-    const createdDate = r.createdAt
-      ? new Date(
-          r.createdAt.seconds ? r.createdAt.seconds * 1000 : r.createdAt
-        ).toLocaleDateString("th-TH")
-      : "-";
-
-    const updatedDate = r.updatedAt
-      ? new Date(
-          r.updatedAt.seconds ? r.updatedAt.seconds * 1000 : r.updatedAt
-        ).toLocaleDateString("th-TH")
-      : "-";
+    const createdDate = formatThaiDate(r.createdAt);
+    const updatedDate = formatThaiDate(r.updatedAt);
 
     html += `
       <tr>
-        <td class="text-center">${i++}</td>
-        <td>${r.firstName || ""}</td>
-        <td>${r.lastName || ""}</td>
+        <td>${i++}</td>
+        <td>${escapeHtml(r.firstName)}</td>
+        <td>${escapeHtml(r.lastName)}</td>
         <td>${createdDate}</td>
-        <td>${r.department || ""}</td>
-        <td>${r.phone || ""}</td>
-        <td>${r.email || ""}</td>
-        <td><div class="media-scroll">${r.mediaType || ""}</div></td>
-        <td>${r.workUrl ? `<a href="${r.workUrl}" target="_blank">ชิ้นงาน</a>` : "-"}</td>
-        <td><div class="detail-scroll">${r.description || ""}</div></td>
-        <td class="text-center">${r.round || ""}</td>
-        <td>${r.status || ""}</td>
+        <td>${escapeHtml(r.department)}</td>
+        <td>${escapeHtml(r.phone)}</td>
+        <td>${escapeHtml(r.email)}</td>
+        <td><div class="media-scroll">${escapeHtml(r.mediaType)}</div></td>
+        <td>
+          ${r.workUrl
+            ? `<a href="${escapeHtml(r.workUrl)}" target="_blank" rel="noopener noreferrer">ชิ้นงาน</a>`
+            : "-"}
+        </td>
+        <td><div class="detail-scroll">${escapeHtml(r.description)}</div></td>
+        <td>${escapeHtml(r.round)}</td>
+        <td>${escapeHtml(r.status)}</td>
         <td>${updatedDate}</td>
       </tr>
     `;
   });
 
   html += `</table>`;
-
   html += `<div style="text-align:center;margin-top:15px;">`;
-  if(page > 0){
-    html += `<button class="btn btn-secondary btn-sm" onclick="renderHistory(${page-1})">⬅️ ก่อนหน้า</button> `;
+
+  if (page > 0) {
+    html += `<button class="btn btn-secondary btn-sm" onclick="renderHistory(${page - 1})">⬅️ ก่อนหน้า</button> `;
   }
-  if(end < filteredData.length){
-    html += `<button class="btn btn-primary btn-sm" onclick="renderHistory(${page+1})">ถัดไป ➡️</button>`;
+
+  if (end < filteredData.length) {
+    html += `<button class="btn btn-primary btn-sm" onclick="renderHistory(${page + 1})">ถัดไป ➡️</button>`;
   }
+
   html += `</div>`;
 
   box.innerHTML = html;
 };
 
+/** ================== TAB ================== **/
 
-//** ================== TAB (ต้องอยู่บน window เพราะ HTML onclick เรียก) ================== **//
-window.showTab = function(tab, e){
+window.showTab = function(tab, e) {
   localStorage.setItem("activeTab", tab);
 
   document.getElementById("formTab").style.display = "none";
   document.getElementById("historyTab").style.display = "none";
 
-  document.querySelectorAll(".nav-link").forEach(el => el.classList.remove("active"));
+  document.querySelectorAll(".nav-link").forEach(el => {
+    el.classList.remove("active");
+  });
 
-  if(tab === "form"){
+  if (tab === "form") {
     document.getElementById("formTab").style.display = "block";
   }
 
-  if(tab === "history"){
+  if (tab === "history") {
     document.getElementById("historyTab").style.display = "block";
-    // กัน promise error ทำให้ UI ดูค้าง
-    Promise.resolve(window.renderHistory(currentPage)).catch(()=>{});
+    Promise.resolve(window.renderHistory(currentPage)).catch(console.error);
   }
 
-  if(e && e.target) e.target.classList.add("active");
+  if (e && e.target) {
+    e.target.classList.add("active");
+  }
 };
 
-/** ================== SUBMIT (กันหน้าขาวด้วย return false) ================== **/
-window.handleSubmit = function(e){
+/** ================== SUBMIT ================== **/
+
+window.handleSubmit = async function(e) {
   e.preventDefault();
 
   const data = {
-    firstName: firstName.value,
-    lastName: lastName.value,
-    department: department.value,
-    phone: phone.value,
-    email: email.value,
-    mediaType: mediaType.value,
-    workUrl: workUrl.value,
-    description: description.value,
-    round: round.value
+    firstName: document.getElementById("firstName").value.trim(),
+    lastName: document.getElementById("lastName").value.trim(),
+    department: document.getElementById("department").value.trim(),
+    phone: document.getElementById("phone").value.trim(),
+    email: document.getElementById("email").value.trim(),
+    mediaType: document.getElementById("mediaType").value,
+    workUrl: document.getElementById("workUrl").value.trim(),
+    description: document.getElementById("description").value.trim(),
+    round: document.getElementById("round").value
   };
 
-  Swal.fire({title:"กำลังบันทึก...", didOpen:()=>Swal.showLoading()});
+  Swal.fire({
+    title: "กำลังบันทึก...",
+    allowOutsideClick: false,
+    didOpen: () => Swal.showLoading()
+  });
 
-  google.script.run
-    .withSuccessHandler(async ()=>{
-      try {
-        await saveDataFirebase(data);
-      } catch (err) {
-        console.error(err);
-        Swal.fire("Error", "บันทึก Firestore ไม่สำเร็จ: " + err.message, "error");
-        return;
-      }
+  try {
+    const result = await gasCall("saveData", data);
 
-      Swal.fire("สำเร็จ","บันทึกเรียบร้อย","success");
+    if (!result || result.status !== "success") {
+      throw new Error(result?.message || "ไม่สามารถบันทึกข้อมูลได้");
+    }
 
-      // refresh history cache แล้วพาไป history
-      historyData = [];
-      currentPage = 0;
-      await window.renderHistory(0);
-      window.showTab("history");
-    })
-    .withFailureHandler(err=>{
-      Swal.fire("Error", err.message, "error");
-    })
-    .saveData(data);
+    Swal.fire("สำเร็จ", "บันทึกเรียบร้อย", "success");
 
-  return false; // ✅ กันฟอร์ม submit แล้วหน้าเปลี่ยนเป็นขาว
+    document.querySelector("#formTab form").reset();
+
+    historyData = [];
+    historyLoaded = false;
+    currentPage = 0;
+
+    const searchInput = document.getElementById("historySearch");
+    if (searchInput) searchInput.value = "";
+
+    historySearchTerm = "";
+
+    await window.renderHistory(0);
+    window.showTab("history");
+
+  } catch (err) {
+    console.error(err);
+    Swal.fire("Error", err.message || "เกิดข้อผิดพลาด", "error");
+  }
+
+  return false;
 };
 
-/** ================== ADMIN (เด้งถามเฉพาะตอนกดปุ่ม) ================== **/
-window.requestAdmin = async function(e){
-  if(e) e.preventDefault();
+/** ================== ADMIN ================== **/
 
-  if(!WEBAPP_URL){
+window.requestAdmin = function(e) {
+  if (e) e.preventDefault();
+
+  if (!WEBAPP_URL) {
     Swal.fire("Error", "ไม่พบ WEBAPP_URL จากระบบ", "error");
     return;
   }
@@ -870,16 +879,17 @@ window.requestAdmin = async function(e){
   window.open(WEBAPP_URL + "?page=admin", "_blank");
 };
 
-
 /** ================== INIT ================== **/
-window.addEventListener("DOMContentLoaded", ()=>{
+
+window.addEventListener("DOMContentLoaded", () => {
   const saved = localStorage.getItem("activeTab") || "form";
+
   window.showTab(saved);
 
-  // set active tab button (0=form,1=history,2=admin)
   const btns = document.querySelectorAll(".nav-link");
-  if(saved === "form") btns[0]?.classList.add("active");
-  if(saved === "history") btns[1]?.classList.add("active");
+
+  if (saved === "form") btns[0]?.classList.add("active");
+  if (saved === "history") btns[1]?.classList.add("active");
 });
 </script>
 
