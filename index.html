@@ -10,9 +10,7 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-  window.APP_CONFIG = {
-    WEBAPP_URL: "<?= WEBAPP_URL ?>"
-  };
+const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxU2JG0Nlww5Ncgz5MCGDDNH_NhxXZwAL2YKTsC5jk4MCkhg2YPeIjSxmh4gFt1fwAJ/exec";
 </script>
 
 <style>
@@ -594,8 +592,6 @@ footer{
 </footer>
 
 <script>
-/** ================== CONFIG ================== **/
-const WEBAPP_URL = (window.APP_CONFIG?.WEBAPP_URL || "").replace(/"/g, "");
 
 /** ================== STATE ================== **/
 let currentPage = 0;
